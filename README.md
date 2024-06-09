@@ -8,9 +8,8 @@ Este repositório contém códigos para a análise de sentimentos em um dataset 
 - `src/`: Contém os códigos-fonte e scripts utilizados no projeto.
   - `prompts/`: Diretório onde os prompts devem ser adicionados.
   - `scripts/`: Scripts Python para processamento de dados, análise com LLMs e criação de matrizes de confusão.
-- `data/`: Diretório para armazenar os datasets utilizados.
-- `results/`: Diretório onde os resultados da análise e avaliação são salvos.
-
+- `tests/`: Possui os scripts de teste
+  
 ## Requisitos
 
 A primeira coisa que você precisa fazer é baixar os requirements na pasta de `docs` com o comando:
