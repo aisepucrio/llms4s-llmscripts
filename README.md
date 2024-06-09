@@ -18,7 +18,9 @@ A primeira coisa que você precisa fazer é baixar os requirements na pasta de `
 pip install -r docs/requirements.txt
 ```
 
-## Utilização Dentro da pasta src, adicione os prompts na pasta prompts seguindo a numeração.
+## Utilização
+
+- Dentro da pasta src, adicione os prompts na pasta prompts seguindo a numeração.
 
 - Após adicionar os prompts, vá para a pasta scripts dentro de src.
 
