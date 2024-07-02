@@ -8,7 +8,7 @@ from tqdm.auto import tqdm
 
 client = ollama.Client(host='http://localhost:11434')
 
-models = ['mistral:instruct', 'gemma:instruct', 'llama3:instruct']
+models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct']
 
 # Variável global para controlar a interrupção
 interrupted = False
@@ -49,7 +49,7 @@ Read the following message (in triple quotes, formatted as markdown):
         print(response['response'])
         print('Error in response')
 
-def classify_and_save(dataset, model, output_path, prompt, sample_size=None):
+def classify_and_save(dataset, model, output_path, prompt, message_type, sample_size=None):
     with open(dataset) as f:
         dataset = json.load(f)
     
@@ -68,7 +68,7 @@ def classify_and_save(dataset, model, output_path, prompt, sample_size=None):
     for message in tqdm(dataset):
         if interrupted:
             break
-        llm_polarity = classify_pr(message["clean_message"], model, prompt)
+        llm_polarity = classify_pr(message[message_type], model, prompt)
         if 'tools' not in message:
             message['tools'] = {}
         message['tools'][model] = llm_polarity
@@ -86,12 +86,12 @@ def get_prompt(prompt):
         with open(f"./prompts/{prompt}.txt") as f:
             content = f.read()
             if not content:
-                print("File is empty")
+                print("File is empjty")
                 sys.exit(1)
             else:
                 return content
 
-def main(prompt_name, models, sample_size):
+def main(prompt_name, models, message_type, sample_size):
     prompt = get_prompt(prompt_name)
     dataset_path = pathlib.Path("./data/dataset.json")
     output_path = pathlib.Path(fr"./data/analysis-{prompt_name}.json")
@@ -102,8 +102,8 @@ def main(prompt_name, models, sample_size):
     for model in models:
         if interrupted:
             break
-        classify_and_save(dataset_path, model, output_path, prompt, sample_size)
+        classify_and_save(dataset_path, model, output_path, prompt, message_type, sample_size)
     print("Classification completed.")
 
 if __name__ == '__main__':
-    main('prompt1', models, sample_size=None)
+    main('prompt_base', models, 'clean_message', sample_size=None)
