@@ -8,14 +8,14 @@ from tqdm.auto import tqdm
 
 client = ollama.Client(host='http://localhost:11434')
 
-models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct', 'SentiStrength', 'SentiStrengthSE','SentiCR','DEVA','Senti4SD']
+models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct']
 
 # Variável global para controlar a interrupção
 interrupted = False
 
 def signal_handler(sig, frame):
     global interrupted
-    interrupted = True
+    interrupted = True                                                                                              
     print("Process interrupted. Saving progress...")
 
 def classify_pr(pr, model, prompt_content):
@@ -94,7 +94,7 @@ def get_prompt(prompt):
 def main(prompt_name, models, message_type, sample_size):
     prompt = get_prompt(prompt_name)
     dataset_path = pathlib.Path("./data/dataset.json")
-    output_path = pathlib.Path(fr"./data/analysis-{prompt_name}.json")
+    output_path = pathlib.Path(fr"./data/analysis-{prompt_name}-{message_type}.json")
 
     # Configura o manipulador de sinal para interrupções
     signal.signal(signal.SIGINT, signal_handler)
@@ -106,4 +106,5 @@ def main(prompt_name, models, message_type, sample_size):
     print("Classification completed.")
 
 if __name__ == '__main__':
-    main('prompt_base', models, 'clean_message', sample_size=None)
+    for prompt in ['few-shot', 'one-shot', 'simple-zero-shot']:
+        main(prompt, models, 'clean_message', sample_size=None)

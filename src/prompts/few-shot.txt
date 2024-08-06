@@ -1,0 +1,14 @@
+This message is part of a discussion from a GitHub pull request. Perform sentiment analysis on this message by classifying it as three types of sentiment: positive, neutral, and negative.
+
+Examples:
+
+Message: "This code looks great! Good job."
+Classification: Positive
+
+Message: "The code needs some corrections, but it's on the right track."
+Classification: Neutral
+
+Message: "This code is terrible and needs to be redone from scratch."
+Classification: Negative
+
+Return the result as a JSON with the following format: {{"sentiment_polarity": "positive OR neutral OR negative"}}

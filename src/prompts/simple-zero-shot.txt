@@ -1,0 +1,3 @@
+This message is part of a discussion from a GitHub pull request. Perform sentiment analysis on this message by classifying it as three types of sentiment: positive, neutral, and negative. For this task, utilize the Shaver emotion model, where love and joy (and related emotions) are considered positive, anger, sadness, and fear are considered negative, surprise can be positive or negative depending on the context, and neutral is considered the absence of any emotions.
+
+Return the result as a JSON with the following format: {{"sentiment_polarity": "positive OR neutral OR negative"}}
