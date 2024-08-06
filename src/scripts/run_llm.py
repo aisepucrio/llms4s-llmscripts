@@ -8,7 +8,7 @@ from tqdm.auto import tqdm
 
 client = ollama.Client(host='http://localhost:11434')
 
-models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct']
+models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct', 'SentiStrength', 'SentiStrengthSE','SentiCR','DEVA','Senti4SD']
 
 # Variável global para controlar a interrupção
 interrupted = False
