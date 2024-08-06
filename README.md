@@ -7,7 +7,7 @@ Este repositório contém códigos para a análise de sentimentos em um dataset 
 - `docs/`: Contém os arquivos de documentação e requisitos.
 - `src/`: Contém os códigos-fonte e scripts utilizados no projeto.
   - `prompts/`: Diretório onde os prompts devem ser adicionados.
-  - `scripts/`: Scripts Python para processamento de dados, análise com LLMs e criação de matrizes de confusão.
+  - `scripts/`: Scripts Python para processamento de dados, análise com LLMs, criação de matrizes de confusão e códigos para as RQs
 - `tests/`: Possui os scripts de teste
   
 ## Requisitos
