@@ -106,5 +106,5 @@ def main(prompt_name, models, message_type, sample_size):
     print("Classification completed.")
 
 if __name__ == '__main__':
-    for prompt in ['basic_prompt']:
+    for prompt in ['complex-zero-shot', 'cot', 'few-shot', 'one-shot', 'simple-zero-shot']:
         main(prompt, models, 'clean_message', sample_size=None)
