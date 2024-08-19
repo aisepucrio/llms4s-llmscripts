@@ -8,7 +8,7 @@ from tqdm.auto import tqdm
 
 client = ollama.Client(host='http://localhost:11434')
 
-models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct']
+models = ['llama3.1:8b ']
 
 # Variável global para controlar a interrupção
 interrupted = False
@@ -106,5 +106,5 @@ def main(prompt_name, models, message_type, sample_size):
     print("Classification completed.")
 
 if __name__ == '__main__':
-    for prompt in ['few-shot', 'one-shot', 'simple-zero-shot']:
+    for prompt in ['basic_prompt']:
         main(prompt, models, 'clean_message', sample_size=None)

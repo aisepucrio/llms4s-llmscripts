@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import json
 
-models = ['llama3:instruct', 'gemma:instruct', 'mistral:instruct', 'SentiStrength', 'SentiStrengthSE', 'SentiCR', 'DEVA', 'Senti4SD']
+models = ['llama3.1:8b ', 'llama3:instruct', 'gemma:instruct', 'mistral:instruct', 'SentiStrength', 'SentiStrengthSE', 'SentiCR', 'DEVA', 'Senti4SD']
 tools = ['SentiStrength', 'SentiStrengthSE', 'SentiCR', 'DEVA', 'Senti4SD']
 
 def get_files_names():
@@ -33,14 +33,23 @@ def confusion_matrix_for_models(file_name, model_name):
     df['real_polarity'] = df.apply(lambda row: get_polarity(row), axis=1)
     df = df[df['real_polarity'].isin(classes)]
 
+    if df.empty:
+        print(f"No valid data for model {model_name} on prompt {file_name}. Skipping...")
+        return
+
     prompt = file_name.split('-')[1] if '-' in file_name else 'N/A'
 
     df['predicted_polarity'] = df.apply(lambda row: get_predicted_polarity(row, model_name), axis=1)
     df = df[df['predicted_polarity'].isin(classes)]
-    report = classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, output_dict=True, zero_division=0)
+
+    if df.empty:
+        print(f"No valid predictions for model {model_name} on prompt {file_name}. Skipping...")
+        return
+
+    report = classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, labels=classes, output_dict=True, zero_division=0)
 
     print(f"Classification Report for {model_name} on prompt {prompt}:\n")
-    print(classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, zero_division=0))
+    print(classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, labels=classes, zero_division=0))
 
     metrics = report['weighted avg']
     accuracy = report['accuracy']
@@ -61,9 +70,18 @@ def confusion_matrix_for_tools(file_name, tool_name):
     df['real_polarity'] = df.apply(lambda row: get_polarity(row), axis=1)
     df = df[df['real_polarity'].isin(classes)]
 
+    if df.empty:
+        print(f"No valid data for tool {tool_name} on prompt {file_name}. Skipping...")
+        return
+
     df['predicted_polarity'] = df.apply(lambda row: get_predicted_polarity(row, tool_name), axis=1)
     df = df[df['predicted_polarity'].isin(classes)]
-    report = classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, output_dict=True, zero_division=0)
+
+    if df.empty:
+        print(f"No valid predictions for tool {tool_name} on prompt {file_name}. Skipping...")
+        return
+
+    report = classification_report(df['real_polarity'], df['predicted_polarity'], target_names=classes, labels=classes, output_dict=True, zero_division=0)
 
     metrics = report['weighted avg']
     accuracy = report['accuracy']
